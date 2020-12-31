@@ -169,6 +169,27 @@ public class RegisterTest {
 		WebElement fieldEmail=driver.findElement(By.id("email"));
 		assertEquals("pieter.pieters@hotmail.com",fieldEmail.getAttribute("value"));
 	}
+	
+		@Test
+	public void test_Register_WhenAlready_Registered_and_Loggedin(){
+		String useridRandom = generateRandomUseridInOrderToRunTestMoreThanOnce("test");
+		submitForm( useridRandom,"Stephanie", "Serdons", "stephanie.serdons@hotmail.com", "test123");
+
+		driver.get(path+"?command=Register");
+
+		WebElement fieldMsg = driver.findElement(By.cssSelector("div.msg p"));
+		assertEquals("You are already logged in!", fieldMsg.getText());
+	}
+
+	@Test
+	public void test_Login_WhenAlready_Registered_and_Loggedin(){
+		String useridRandom = generateRandomUseridInOrderToRunTestMoreThanOnce("test");
+		submitForm( useridRandom,"Gerben", "Maes", "gerben.maes@hotmail.com", "test123");
+
+		driver.get(path+"?command=Login");
+
+		WebElement fieldMsg = driver.findElement(By.cssSelector("div.msg p"));
+		assertEquals("You are already logged in!", fieldMsg.getText());
 
 	private String generateRandomUseridInOrderToRunTestMoreThanOnce(String component) {
 		int random = (int)(Math.random() * 1000 + 1);
